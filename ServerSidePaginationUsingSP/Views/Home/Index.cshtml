@@ -1,0 +1,43 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+<table id="data" class="table table-bordered">
+    <thead>
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+<script>
+    GetDataTableData();
+    function GetDataTableData() {
+        $("#data").DataTable({
+            "processing": true,
+            "serverSide": true,
+            "filter": true,
+            "orderMulti": false,
+            "destroy": true,
+            "ordering": true,
+            "ajax": {
+                "url": '/Home/GetDetails',
+                "type": "POST",
+                "datatype": "json"
+            },
+
+            "columns": [
+                {
+                    "data": "First_Name", "name": "First_Name", "autoWidth": true,
+                    mRender: function (data, type, full) {
+                        var id = data;
+                        return "<p style='background-color:#090;color: white;text-align: center;'>" + id + "</p>";
+                    }
+                }
+                , { "data": "Last_Name", "name": "Last_Name", "autoWidth": true }
+                , { "data": "Email_Address", "name": "Email_Address", "autoWidth": true }
+            ]
+        });
+    }
+</script>
